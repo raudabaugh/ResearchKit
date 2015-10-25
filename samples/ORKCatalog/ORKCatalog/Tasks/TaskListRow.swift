@@ -71,7 +71,7 @@ enum TaskListRow: Int, CustomStringConvertible {
     case BooleanQuestion
     case TwoFingerTappingInterval
     case SpatialSpanMemory
-    case Fitness // 13
+    case Sleep // 13
     case ShortWalk
     case Audio
     case ToneAudiometry
@@ -102,7 +102,7 @@ enum TaskListRow: Int, CustomStringConvertible {
     
     /// Returns an array of tasks relevant to lab 3.
     static var lab3Cases: [TaskListRow] {
-        return [Fitness, Survey]
+        return [Sleep, Survey]
     }
     
     
@@ -149,7 +149,7 @@ enum TaskListRow: Int, CustomStringConvertible {
             case .SpatialSpanMemory:
                 return NSLocalizedString("Spatial Span Memory Active Task", comment: "")
 
-            case .Fitness:
+            case .Sleep:
                 return NSLocalizedString("Sleep Active Task", comment: "")
 
             case .ShortWalk:
@@ -331,8 +331,8 @@ enum TaskListRow: Int, CustomStringConvertible {
             case .SpatialSpanMemory:
                 return spatialSpanMemoryTask
             
-            case .Fitness:
-                return fitnessTask
+            case .Sleep:
+                return sleepTask
             
             case .ShortWalk:
                 return shortWalkTask
@@ -626,8 +626,9 @@ enum TaskListRow: Int, CustomStringConvertible {
         short walking and rest durations of 20 seconds each are used, whereas more
         realistic durations might be several minutes each.
     */
-    private var fitnessTask: ORKTask {
-        return ORKOrderedTask.fitnessCheckTaskWithIdentifier(Identifier.FitnessTask.rawValue, intendedUseDescription: exampleDescription, walkDuration: 20, restDuration: 20, options: [])
+    private var sleepTask: ORKTask {
+//        return ORKOrderedTask.fitnessCheckTaskWithIdentifier(Identifier.FitnessTask.rawValue, intendedUseDescription: exampleDescription, walkDuration: 20, restDuration: 20, options: [])
+        return ORKOrderedTask.sleepTaskWithIdentifier(Identifier.AudioTask.rawValue, intendedUseDescription: exampleDescription, speechInstruction: exampleSpeechInstruction, shortSpeechInstruction: exampleSpeechInstruction, duration: 86400, recordingSettings: nil, options: [])
     }
 
     /// This task presents the Gait and Balance pre-defined active task.

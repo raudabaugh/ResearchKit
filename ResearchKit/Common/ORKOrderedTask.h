@@ -235,6 +235,14 @@ typedef NS_OPTIONS(NSUInteger, ORKPredefinedTaskOption) {
                           recordingSettings:(nullable NSDictionary *)recordingSettings
                                     options:(ORKPredefinedTaskOption)options;
 
++ (ORKOrderedTask *)sleepTaskWithIdentifier:(NSString *)identifier
+                     intendedUseDescription:(nullable NSString *)intendedUseDescription
+                          speechInstruction:(nullable NSString *)speechInstruction
+                     shortSpeechInstruction:(nullable NSString *)shortSpeechInstruction
+                                   duration:(NSTimeInterval)duration
+                          recordingSettings:(nullable NSDictionary *)recordingSettings
+                                    options:(ORKPredefinedTaskOption)options;
+
 /**
  Returns a predefined task that consists of two finger tapping.
  
