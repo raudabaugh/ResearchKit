@@ -71,7 +71,7 @@ enum TaskListRow: Int, CustomStringConvertible {
     case BooleanQuestion
     case TwoFingerTappingInterval
     case SpatialSpanMemory
-    case Fitness
+    case Fitness // 13
     case ShortWalk
     case Audio
     case ToneAudiometry
@@ -80,7 +80,7 @@ enum TaskListRow: Int, CustomStringConvertible {
     case TimedWalk
     case PSAT
     case ImageCapture
-    case Survey
+    case Survey // 22
     case Consent
     case Form
     
@@ -99,6 +99,12 @@ enum TaskListRow: Int, CustomStringConvertible {
         
         return Array(caseGenerator)
     }
+    
+    /// Returns an array of tasks relevant to lab 3.
+    static var lab3Cases: [TaskListRow] {
+        return [Fitness, Survey]
+    }
+    
     
     // MARK: CustomStringConvertible
     
@@ -144,7 +150,7 @@ enum TaskListRow: Int, CustomStringConvertible {
                 return NSLocalizedString("Spatial Span Memory Active Task", comment: "")
 
             case .Fitness:
-                return NSLocalizedString("Fitness Check Active Task", comment: "")
+                return NSLocalizedString("Sleep Active Task", comment: "")
 
             case .ShortWalk:
                 return NSLocalizedString("Short Walk Active Task", comment: "")
@@ -171,7 +177,7 @@ enum TaskListRow: Int, CustomStringConvertible {
                 return NSLocalizedString("Image Capture Task", comment: "")
 
             case .Survey:
-                return NSLocalizedString("Simple Survey", comment: "")
+                return NSLocalizedString("Survey", comment: "")
 
             case .Consent:
                 return NSLocalizedString("Consent", comment: "")

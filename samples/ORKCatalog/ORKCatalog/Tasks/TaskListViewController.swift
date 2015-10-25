@@ -55,7 +55,7 @@ class TaskListViewController: UITableViewController, ORKTaskViewControllerDelega
     */
     var taskResultFinishedCompletionHandler: (ORKResult -> Void)?
     
-    let taskListRows = TaskListRow.allCases
+    let taskListRows = TaskListRow.lab3Cases
     
     // MARK: UITableViewDataSource
     
