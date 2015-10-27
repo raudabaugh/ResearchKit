@@ -108,50 +108,50 @@ enum TaskListRow: Int, CustomStringConvertible {
     /// Returns an array of all the task list row enum cases.
     static var sections: [ TaskListRowSection ] {
         return [
-            TaskListRowSection(title: "Surveys", rows:
+            TaskListRowSection(title: "CS5555-Lab3-Survey", rows:
                 [
-                    .Form,
+//                    .Form,
                     .Survey,
                 ]),
-            TaskListRowSection(title: "Survey Questions", rows:
-                [
-                    .BooleanQuestion,
-                    .DateQuestion,
-                    .DateTimeQuestion,
-                    .EligibilityQuestion,
-                    .ImageChoiceQuestion,
-                    .LocationQuestion,
-                    .NumericQuestion,
-                    .ScaleQuestion,
-                    .TextQuestion,
-                    .TextChoiceQuestion,
-                    .TimeIntervalQuestion,
-                    .TimeOfDayQuestion,
-                    .ValuePickerChoiceQuestion,
-                    .ValidatedTextQuestion,
-                    .ImageCapture,
-                    .Wait,
-                ]),
-            TaskListRowSection(title: "Onboarding", rows:
-                [
-                    .EligibilityTask,
-                    .Consent,
-                    .Passcode,
-                ]),
-            TaskListRowSection(title: "Active Tasks", rows:
-                [
-                    .Audio,
-                    .Fitness,
-                    .HolePegTest,
-                    .PSAT,
-                    .ReactionTime,
-                    .ShortWalk,
-                    .SpatialSpanMemory,
-                    .TimedWalk,
-                    .ToneAudiometry,
-                    .TowerOfHanoi,
-                    .TwoFingerTappingInterval,
-                ]),
+//            TaskListRowSection(title: "Survey Questions", rows:
+//                [
+//                    .BooleanQuestion,
+//                    .DateQuestion,
+//                    .DateTimeQuestion,
+//                    .EligibilityQuestion,
+//                    .ImageChoiceQuestion,
+//                    .LocationQuestion,
+//                    .NumericQuestion,
+//                    .ScaleQuestion,
+//                    .TextQuestion,
+//                    .TextChoiceQuestion,
+//                    .TimeIntervalQuestion,
+//                    .TimeOfDayQuestion,
+//                    .ValuePickerChoiceQuestion,
+//                    .ValidatedTextQuestion,
+//                    .ImageCapture,
+//                    .Wait,
+//                ]),
+//            TaskListRowSection(title: "Onboarding", rows:
+//                [
+//                    .EligibilityTask,
+//                    .Consent,
+//                    .Passcode,
+//                ]),
+//            TaskListRowSection(title: "Active Tasks", rows:
+//                [
+//                    .Audio,
+//                    .Fitness,
+//                    .HolePegTest,
+//                    .PSAT,
+//                    .ReactionTime,
+//                    .ShortWalk,
+//                    .SpatialSpanMemory,
+//                    .TimedWalk,
+//                    .ToneAudiometry,
+//                    .TowerOfHanoi,
+//                    .TwoFingerTappingInterval,
+//                ]),
         ]}
     
     // MARK: CustomStringConvertible
@@ -162,7 +162,7 @@ enum TaskListRow: Int, CustomStringConvertible {
             return NSLocalizedString("Form Survey Example", comment: "")
             
         case .Survey:
-            return NSLocalizedString("Simple Survey Example", comment: "")
+            return NSLocalizedString("Sleep Apnea Survey", comment: "")
             
         case .BooleanQuestion:
             return NSLocalizedString("Boolean Question", comment: "")
@@ -282,8 +282,13 @@ enum TaskListRow: Int, CustomStringConvertible {
         case SurveyTask
         case IntroStep
         case QuestionStep
+        case SnoreQuestionStep
+        case HeightQuestionStep
+        case WeightQuestionStep
+        case HighBloodPressureQuestionStep
+        case FamilyHistoryQuestionStep
         case SummaryStep
-        
+      
         // Task with a Boolean question.
         case BooleanQuestionTask
         case BooleanQuestionStep
@@ -535,48 +540,87 @@ enum TaskListRow: Int, CustomStringConvertible {
         
         instructionStep.title = NSLocalizedString("Sleep Apnea Survey", comment: "")
         
-        instructionStep.text = "We are doing a study on Sleep Apnea and want to collect some personal data from you. Please click to get started. Thanks!"
+        instructionStep.text = "We are doing a study on Sleep Apnea and want to collect some data from you. Please click to get started. Thanks!"
       
         //2. Gender question.
-        let femailChoiceText = NSLocalizedString("Female", comment: "")
-        let maleChoiceText = NSLocalizedString("Male", comment: "")
+          let femailChoiceText = NSLocalizedString("Female", comment: "")
+          let maleChoiceText = NSLocalizedString("Male", comment: "")
       
-        // The text to display can be separate from the value coded for each choice:
           let genderChoices = [
             ORKTextChoice(text: femailChoiceText, value: "female"),
             ORKTextChoice(text: maleChoiceText, value: "male")
           ]
       
-        let genderAnswer = ORKAnswerFormat.choiceAnswerFormatWithStyle(.SingleChoice, textChoices: genderChoices)
+          let genderAnswer = ORKAnswerFormat.choiceAnswerFormatWithStyle(.SingleChoice, textChoices: genderChoices)
       
-        let genderQuestionStep = ORKQuestionStep(identifier: String(Identifier.TextChoiceQuestionStep), title: exampleQuestionText, answer: genderAnswer)
+          let genderQuestionStep = ORKQuestionStep(identifier: String(Identifier.TextChoiceQuestionStep), title: "What's your gender?", answer: genderAnswer)
       
+        // 3. Age
+        let ageUnit = NSLocalizedString("yrs", comment: "")
+        let ageAnswer = ORKAnswerFormat.decimalAnswerFormatWithUnit(ageUnit)
+      
+        let ageQuestionStep = ORKQuestionStep(identifier: String(Identifier.NumericQuestionStep), title: "Enter your age", answer: ageAnswer)
+      
+      
+        // 4. Height
+        let heightQuestionStep = ORKQuestionStep(identifier: String(Identifier.HeightQuestionStep), title: "Enter your height", answer: ORKAnswerFormat.decimalAnswerFormatWithUnit(nil))
+
+        heightQuestionStep.placeholder = NSLocalizedString("Please specify (cm/ft).", comment: "")
+      
+
+        // 5. Weight
+        let weightQuestionStep = ORKQuestionStep(identifier: String(Identifier.WeightQuestionStep), title: "Enter your weight", answer: ORKAnswerFormat.decimalAnswerFormatWithUnit(nil))
+      
+        weightQuestionStep.placeholder = NSLocalizedString("Please specify (kg/lb).", comment: "")
+      
+
+        // 6. Diagnose.
+        let diagnoseQuestionStepAnswer = ORKBooleanAnswerFormat()
         
-        // Add a question step.
-        let questionStepAnswerFormat = ORKBooleanAnswerFormat()
-        
-        let questionStepTitle = NSLocalizedString("Would you like to subscribe to our newsletter?", comment: "")
-        let questionStep = ORKQuestionStep(identifier: String(Identifier.QuestionStep), title: questionStepTitle, answer: questionStepAnswerFormat)
+        let diagnoseQuestionStepTitle = NSLocalizedString("Have you ever been diagnosed with Obstructive Sleep Apnea?", comment: "")
+
+        let diagnoseQuestionStep = ORKQuestionStep(identifier: String(Identifier.QuestionStep), title: diagnoseQuestionStepTitle, answer: diagnoseQuestionStepAnswer)
       
-        // Add age question:
-        let answerFormat = ORKAnswerFormat.dateAnswerFormat()
+      diagnoseQuestionStep.text = "Obstructive sleep apnea (OSA): caused by a blockage of the airway, usually when the soft tissue in the back of the throat collapses during sleep."
       
-        let step = ORKQuestionStep(identifier: String(Identifier.DateQuestionStep), title: "What's your date of birth?", answer: answerFormat)
+        // 7. Family History.
+        let familyHistoryQuestionStepAnswer = ORKBooleanAnswerFormat()
       
-//        step.text = exampleDetailText
+        let familyHistoryQuestionStepTitle = NSLocalizedString("Do you have family history of Sleep Apnea?", comment: "")
+        let familyHistoryQuestionStep = ORKQuestionStep(identifier: String(Identifier.FamilyHistoryQuestionStep), title: familyHistoryQuestionStepTitle, answer: familyHistoryQuestionStepAnswer)
       
-//        return ORKOrderedTask(identifier: String(Identifier.DateQuestionTask), steps: [step])
+        // 8. High blood pressure.
+        let highBloodPressureQuestionStepAnswer = ORKBooleanAnswerFormat()
       
-        // Add a summary step.
+        let highBloodPressureQuestionStepTitle = NSLocalizedString("Do you have high blood pressure?", comment: "")
+        let highBloodPressureQuestionStep = ORKQuestionStep(identifier: String(Identifier.HighBloodPressureQuestionStep), title: highBloodPressureQuestionStepTitle, answer: highBloodPressureQuestionStepAnswer)
+      
+      
+
+      
+      
+        // 9. Snore.
+        let snoreQuestionStepAnswer = ORKBooleanAnswerFormat()
+      
+        let snoreQuestionStepTitle = NSLocalizedString("Do you snore loudly?", comment: "")
+        let snoreQuestionStep = ORKQuestionStep(identifier: String(Identifier.SnoreQuestionStep), title: snoreQuestionStepTitle, answer: snoreQuestionStepAnswer)
+        snoreQuestionStep.text = "Loudly than talking or loud enough to be heard through closed door."
+      
+        // 10. summary step.
         let summaryStep = ORKInstructionStep(identifier: String(Identifier.SummaryStep))
         summaryStep.title = NSLocalizedString("Thanks", comment: "")
-        summaryStep.text = NSLocalizedString("Thank you for participating in this sample survey.", comment: "")
+        summaryStep.text = NSLocalizedString("Thank you for participating in Sleep Apnea survey.", comment: "")
         
         return ORKOrderedTask(identifier: String(Identifier.SurveyTask), steps: [
             instructionStep,
             genderQuestionStep,
-            questionStep,
-            step,
+            ageQuestionStep,
+            heightQuestionStep,
+            weightQuestionStep,
+            diagnoseQuestionStep,
+            familyHistoryQuestionStep,
+            highBloodPressureQuestionStep,
+            snoreQuestionStep,
             summaryStep
             ])
     }
