@@ -529,19 +529,44 @@ enum TaskListRow: Int, CustomStringConvertible {
     survey with an introduction, a question, and a conclusion.
     */
     private var surveyTask: ORKTask {
-        // Create the intro step.
+      
+        // 1. Create the intro step.
         let instructionStep = ORKInstructionStep(identifier: String(Identifier.IntroStep))
         
-        instructionStep.title = NSLocalizedString("Sample Survey", comment: "")
+        instructionStep.title = NSLocalizedString("Sleep Apnea Survey", comment: "")
         
-        instructionStep.text = exampleDescription
+        instructionStep.text = "We are doing a study on Sleep Apnea and want to collect some personal data from you. Please click to get started. Thanks!"
+      
+        //2. Gender question.
+        let femailChoiceText = NSLocalizedString("Female", comment: "")
+        let maleChoiceText = NSLocalizedString("Male", comment: "")
+      
+        // The text to display can be separate from the value coded for each choice:
+          let genderChoices = [
+            ORKTextChoice(text: femailChoiceText, value: "female"),
+            ORKTextChoice(text: maleChoiceText, value: "male")
+          ]
+      
+        let genderAnswer = ORKAnswerFormat.choiceAnswerFormatWithStyle(.SingleChoice, textChoices: genderChoices)
+      
+        let genderQuestionStep = ORKQuestionStep(identifier: String(Identifier.TextChoiceQuestionStep), title: exampleQuestionText, answer: genderAnswer)
+      
         
         // Add a question step.
         let questionStepAnswerFormat = ORKBooleanAnswerFormat()
         
         let questionStepTitle = NSLocalizedString("Would you like to subscribe to our newsletter?", comment: "")
         let questionStep = ORKQuestionStep(identifier: String(Identifier.QuestionStep), title: questionStepTitle, answer: questionStepAnswerFormat)
-        
+      
+        // Add age question:
+        let answerFormat = ORKAnswerFormat.dateAnswerFormat()
+      
+        let step = ORKQuestionStep(identifier: String(Identifier.DateQuestionStep), title: "What's your date of birth?", answer: answerFormat)
+      
+//        step.text = exampleDetailText
+      
+//        return ORKOrderedTask(identifier: String(Identifier.DateQuestionTask), steps: [step])
+      
         // Add a summary step.
         let summaryStep = ORKInstructionStep(identifier: String(Identifier.SummaryStep))
         summaryStep.title = NSLocalizedString("Thanks", comment: "")
@@ -549,7 +574,9 @@ enum TaskListRow: Int, CustomStringConvertible {
         
         return ORKOrderedTask(identifier: String(Identifier.SurveyTask), steps: [
             instructionStep,
+            genderQuestionStep,
             questionStep,
+            step,
             summaryStep
             ])
     }
